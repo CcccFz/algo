@@ -1,4 +1,5 @@
 from typing import List
+import random
 
 def merge_sort(items: List[int]):
     merge_sort_by_idx(items, 0, len(items)-1)
@@ -36,6 +37,9 @@ def quick_sort_by_idx(items: List[int], start, end: int):
         quick_sort_by_idx(items, mid+1, end)
 
 def partition(items: List[int], start, end: int):
+    idx = random.randint(start, end)   
+    items[end], items[idx] = items[idx], items[end]
+
     i = start
     for j in range(start, end):
         if items[j] < items[end]:

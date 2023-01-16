@@ -24,8 +24,8 @@ class Solution:
                 return self.quick_sort(nums, mid+1, end)
             
     def partition(self, nums: List[int], start, end: int) -> int:
-        pivot_idx = random.randint(start, end)   
-        nums[end], nums[pivot_idx] = nums[pivot_idx], nums[end]
+        idx = random.randint(start, end)   
+        nums[end], nums[idx] = nums[idx], nums[end]
 
         i = start
         for j in range(start, end):
