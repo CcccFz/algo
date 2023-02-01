@@ -1,30 +1,32 @@
 class Node:
-    def __init__(self, val):
+    def __init__(self, val=None):
         self.val = val
         self.next = None
 
 class Queue:
     def __init__(self, cap):
         self.cap = cap
-        self.len = 0
-        self.head = Node(None)
+        self.head = Node()
         self.tail = self.head
+        self.len = 0
 
     def enqueue(self, val):
         if self.len == self.cap:
-            return
+            return False
         self.tail.next = Node(val)
         self.tail = self.tail.next
         self.len += 1
-
-    def dequeue(self):
-        if self.len == 0:
-            return
-        self.head.next = self.head.next.next
-        self.len -= 1
-        if self.len == 0:
-            self.tail = self.head
+        return True
     
+    def dequeue(self):
+        if self.len > 0:
+            val = self.head.next.val
+            self.head.next = self.head.next.next
+            self.len -= 1
+            if self.len == 0:
+                self.tail = self.head
+            return val
+
     def __repr__(self) -> str:
         ret = []
         cur = self.head.next

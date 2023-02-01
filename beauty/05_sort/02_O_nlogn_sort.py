@@ -1,58 +1,71 @@
 from typing import List
 import random
 
-def merge_sort(items: List[int]):
-    merge_sort_by_idx(items, 0, len(items)-1)
+def merge_sort(nums: List[int]):
+    def merge_sort_idx(nums, low, high):
+        if low < high:
+            mid = low + ((high-low)>>1)
+            merge_sort_idx(nums, low, mid)
+            merge_sort_idx(nums, mid+1, high)
+            merge(nums, low, mid, high)
 
-def merge_sort_by_idx(items: List[int], start, end: int):
-    if start < end:
-         mid = start + (end - start) // 2
-         merge_sort_by_idx(items, start, mid)
-         merge_sort_by_idx(items, mid+1, end)
-         merge(items, start, mid, end)
-
-def merge(items: List[int], start, mid, end: int):
-    tmp = []
-    i, j = start, mid+1
-    while i <= mid and j <= end:
-        if items[i] <= items[j]:
-            tmp.append(items[i])
-            i += 1
-        else:
-            tmp.append(items[j])
-            j += 1
-    head, tail = (i, mid) if i <= mid else (j, end)
-    tmp.extend(items[head:tail+1])
-    items[start:end+1] = tmp
-
-
-
-def quick_sort(items: List[int]):
-    quick_sort_by_idx(items, 0, len(items)-1)
-
-def quick_sort_by_idx(items: List[int], start, end: int):
-    if start < end:
-        mid = partition(items, start, end)
-        quick_sort_by_idx(items, start, mid-1)
-        quick_sort_by_idx(items, mid+1, end)
-
-def partition(items: List[int], start, end: int):
-    idx = random.randint(start, end)   
-    items[end], items[idx] = items[idx], items[end]
-
-    i = start
-    for j in range(start, end):
-        if items[j] < items[end]:
-            items[i], items[j] = items[j], items[i]
-            i += 1
-    items[i], items[end] = items[end], items[i]
-    return i
+    def merge(nums, low, mid, high):
+        i, j = low, mid+1
+        tmp = []
+        while i <= mid and j <= high:
+            if nums[i] <= nums[j]:
+                tmp.append(nums[i])
+                i += 1
+            else:
+                tmp.append(nums[j])
+                j += 1
+        start, end = (i, mid) if i <= mid else (j, high)
+        tmp.extend(nums[start:end+1])
+        nums[low:high+1] = tmp
     
+    merge_sort_idx(nums, 0, len(nums)-1)
 
+def quick_sort(nums: List[int]):
+    def quick_sort_idx(nums, low, high):
+        if low < high:
+            mid = partition(nums, low, high)
+            quick_sort_idx(nums, low, mid-1)
+            quick_sort_idx(nums, mid+1, high)
 
-items = [3,2,1,5,4,6,7]
-merge_sort(items)
-print(items)
-items = [3,2,1,5,4,6,7]
-quick_sort(items)
-print(items)
+    def partition(nums, low, high):
+        idx = random.randint(low, high)
+        nums[idx], nums[high] = nums[high], nums[idx]
+
+        i = low
+        for j in range(low, high):
+            if nums[j] < nums[high]:
+                nums[j], nums[i] = nums[i], nums[j]
+                i += 1
+        nums[i], nums[high] = nums[high], nums[i]
+        return i
+    
+    def partition2(nums, low, high):
+        idx = random.randint(low, high)
+        nums[idx], nums[high] = nums[high], nums[idx]
+        pivot = nums[high]
+
+        i, j = low, high
+        while i < j:
+            while i < j and nums[i] <= pivot:
+                i += 1
+            nums[j] = nums[i]
+            while i < j and nums[j] > pivot:
+                j -= 1
+            nums[i] = nums[j]
+        nums[i] = pivot
+        return i
+
+    quick_sort_idx(nums, 0, len(nums)-1)
+
+if __name__ == '__main__':
+    nums = [3,2,1,5,4,6,7]
+    merge_sort(nums)
+    print(nums)
+    nums = [3,2,1,5,4,6,7]
+    quick_sort(nums)
+    print(nums)

@@ -5,27 +5,28 @@ class Array:
         self.len = 0
 
     def insert(self, idx, val):
-        if idx >= self.cap:
-            return
+        if self.len == self.cap:
+            return False
         self.data.insert(idx, val)
         self.len += 1
+        return True
 
-    def pop(self, idx):
+    def delete(self, idx):
         if idx >= self.len:
-            return
+            return False
         self.data.pop(idx)
         self.len -= 1
+        return True
 
     def get(self, idx):
-        if idx >= self.len:
-            return None
-        return self.data[idx]
+        if idx < self.len:
+            return self.data[idx]
 
     def find(self, val):
         for i, v in enumerate(self.data):
-            if v == val:
+            if val == v:
                 return i
-        return None
+        return -1
 
     def print(self):
         print(self.data)
@@ -35,15 +36,13 @@ arr.insert(1, 'b')
 arr.insert(0, 'a')
 arr.print()
 print(arr.get(1))
-arr.pop(1)
+arr.delete(1)
 arr.print()
-arr.pop(0)
+arr.delete(0)
 arr.print()
 arr.insert(0, 'c')
 arr.insert(1, 'd')
-arr.pop(0)
+arr.delete(0)
 arr.print()
 
 arr.insert(2, 'e')
-# l.get(2)
-# l.pop(2)

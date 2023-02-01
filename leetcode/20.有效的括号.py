@@ -7,16 +7,14 @@
 # @lc code=start
 class Solution:
     def isValid(self, s: str) -> bool:
-        dic = {'(': ')', '[': ']', '{': '}'}
+        dic = {'(':')','[':']','{':'}'}
         stack = []
         for c in s:
             if c in dic:
                 stack.append(c)
             else:
-                if stack and dic[stack.pop()] == c:
-                    continue
-                else:
-                    return False                    
+                if not stack or dic[stack.pop()] != c:
+                    return False
         return not stack
 # @lc code=end
 
@@ -24,5 +22,6 @@ s = Solution()
 print(s.isValid("()"))
 print(s.isValid("()[]{}"))
 print(s.isValid("(]"))
+print(s.isValid("[(())]"))
 print(s.isValid(""))
 

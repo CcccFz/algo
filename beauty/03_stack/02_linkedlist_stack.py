@@ -6,23 +6,25 @@ class Node:
 class Stack():
     def __init__(self, cap):
         self.cap = cap
-        self.len = 0
         self.top = None
+        self.len = 0
 
     def push(self, val):
         if self.len == self.cap:
-            return
+            return False
         node = Node(val)
         node.next = self.top
         self.top = node
         self.len += 1
+        return True
     
     def pop(self):
-        if self.len == 0:
-            return
-        self.top = self.top.next
-        self.len -= 1
-    
+        if self.len > 0:
+            val = self.top.val
+            self.top = self.top.next
+            self.len -= 1
+            return val
+
     def print(self):
         cur = self.top
         items = []

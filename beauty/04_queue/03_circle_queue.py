@@ -2,20 +2,20 @@ class CircleQueue:
     def __init__(self, cap):
         self.cap = cap + 1
         self.data = [None] * self.cap
-        self.head = 0
-        self.tail = 0
+        self.head, self.tail = 0, 0
 
     def enqueue(self, val):
         if (self.tail + 1) % self.cap == self.head:
-            return
+            return False
         self.data[self.tail] = val
-        self.tail = (self.tail + 1) % self.cap
+        self.tail = (self.tail+1) % self.cap
+        return True
 
     def dequeue(self):
         if self.head == self.tail:
-            return
+            return None
         val = self.data[self.head]
-        self.head = (self.head + 1) % self.cap
+        self.head = (self.head+1) % self.cap
         return val
 
     def __repr__(self) -> str:

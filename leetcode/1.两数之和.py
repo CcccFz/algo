@@ -9,11 +9,11 @@ from typing import List
 # @lc code=start
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        hash = {}
+        dic = {}
         for i, num in enumerate(nums):
-            if target - num in hash:
-                return [hash[target - num], i]
-            hash[num] = i
+            if target-num in dic:
+                return [dic[target-num], i]
+            dic[num] = i
         return []
 # @lc code=end
 solution = Solution()

@@ -1,57 +1,68 @@
 def bsearch_first(nums, target):
-    left, right = 0, len(nums) - 1
-    while left <= right:
-        mid = left + ((right-left)>>1)
+    low, high = 0, len(nums)-1
+    while low <= high:
+        mid = low + ((high-low)>>1)
         if nums[mid] < target:
-            left = mid + 1
+            low = mid + 1
         elif nums[mid] > target:
-            right = mid - 1
+            high = mid - 1
         else:
-            if (mid == 0) or (nums[mid-1] != target):
+            if mid == 0 or nums[mid-1] != target:
                 return mid
-            else:
-                right = mid - 1
+            high = mid - 1
     return -1
 
 def bsearch_last(nums, target):
-    left, right = 0, len(nums) - 1
-    while left <= right:
-        mid = left + ((right-left)>>1)
+    low, high = 0, len(nums)-1
+    size = len(nums)
+    while low <= high:
+        mid = low + ((high-low)>>1)
         if nums[mid] < target:
-            left = mid + 1
+            low = mid + 1
         elif nums[mid] > target:
-            right = mid - 1
+            high = mid - 1
         else:
-            if (mid == len(nums)-1) or (nums[mid+1] != target):
+            if mid == size - 1 or nums[mid+1] != target:
                 return mid
-            else:
-                left = mid + 1
+            low = mid + 1
     return -1
 
 def bsearch_first_not_less(nums, target):
-    left, right = 0, len(nums) - 1
-    while left <= right:
-        mid = left + ((right-left)>>1)
+    low, high = 0, len(nums)-1
+    while low <= high:
+        mid = low + ((high-low)>>1)
         if nums[mid] < target:
-            left = mid + 1
+            low = mid + 1
         else:
-            if (mid == 0) or (nums[mid-1] < target):
+            if mid == 0 or nums[mid-1] < target:
                 return mid
-            else:
-                right = mid - 1
+            high = mid - 1
     return -1
 
 def bsearch_last_not_greater(nums, target):
-    left, right = 0, len(nums) - 1
-    while left <= right:
-        mid = left + ((right-left)>>1)
+    low, high = 0, len(nums)-1
+    size = len(nums)
+    while low <= high:
+        mid = low + ((high-low)>>1)
         if nums[mid] > target:
-            right = mid - 1
+            high = mid - 1
         else:
-            if (mid == len(nums)-1) or (nums[mid+1] > target):
+            if mid == size-1 or nums[mid+1] > target:
                 return mid
-            else:
-                left = mid + 1
+            low = mid + 1
+    return -1
+
+def my_sqrt(x):
+    low, high = 0, x
+    while low <= high:
+        mid = low + (high-low)/2
+        ret = mid * mid
+        if ret > x:
+            high = mid
+        else:
+            if x - ret <= 0.000001:
+                return round(mid, 6)
+            low = mid
     return -1
 
 a = [1, 1, 2, 3, 4, 6, 7, 7, 7, 7, 10, 22]
@@ -76,3 +87,6 @@ print(bsearch_last_not_greater(a, 6) == 5)
 print(bsearch_last_not_greater(a, 7) == 9)
 print(bsearch_last_not_greater(a, 8) == 9)
 print(bsearch_last_not_greater(a, 30) == 11)
+
+print(my_sqrt(4))
+print(my_sqrt(8))

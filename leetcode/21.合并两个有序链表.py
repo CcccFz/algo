@@ -18,17 +18,17 @@ class ListNode:
 #         self.next = next
 class Solution:
     def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
-        dummy = ListNode()
-        head = dummy
-        while list1 and list2:
-            if list1.val < list2.val:
-                dummy.next = list1
-                list1 = list1.next
+        head, l1, l2 = ListNode(-1), list1, list2
+        l = head
+        while l1 and l2:
+            if l1.val <= l2.val:
+                l.next = l1
+                l1 = l1.next
             else:
-                dummy.next = list2
-                list2 = list2.next
-            dummy = dummy.next
-        dummy.next = list1 if list1 else list2
+                l.next = l2
+                l2 = l2.next
+            l = l.next
+        l.next = l1 if l1 else l2
         return head.next
 # @lc code=end
 
