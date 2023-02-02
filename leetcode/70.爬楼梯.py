@@ -7,10 +7,10 @@
 # @lc code=start
 class Solution:
     def climbStairs(self, n: int) -> int:
-        a, b = 0, 1   
-        for _ in range(n):
-            a, b = b, a+b
-        return b
+        cur, next = 1, 2
+        for _ in range(1, n):
+            cur, next = next, cur + next
+        return cur
 # @lc code=end
 s = Solution()
 print(s.climbStairs(2))

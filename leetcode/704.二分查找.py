@@ -7,13 +7,13 @@ from typing import List
 # @lc code=start
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        left, right = 0, len(nums)-1
-        while left <= right:
-            mid = left + ((right-left) >> 1)
+        low, high = 0, len(nums)-1
+        while low <= high:
+            mid = low + ((high-low)>>1)
             if nums[mid] < target:
-                left = mid + 1
+                low = mid + 1
             elif nums[mid] > target:
-                right = mid - 1
+                high = mid - 1
             else:
                 return mid
         return -1

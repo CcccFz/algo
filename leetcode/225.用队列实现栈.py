@@ -5,33 +5,47 @@
 #
 
 # @lc code=start
+# 法一： 两个队列
 class MyStack:
-
     def __init__(self):
-        self.items = []
+        self.queue = []
+        self.push_queue = []
 
     def push(self, x: int) -> None:
-        self.items.append(x)
-        size = len(self.items)
+        self.push_queue.append(x)
+        while self.queue:
+            self.push_queue.append(self.queue.pop(0))
+        self.queue, self.push_queue = self.push_queue, self.queue        
+
+    def pop(self) -> int:
+        return self.queue.pop(0)
+
+    def top(self) -> int:
+        return self.queue[0]
+
+    def empty(self) -> bool:
+        return not self.queue
+
+# 法二： 一个队列
+class MyStack2:
+    def __init__(self):
+        self.queue = []
+
+    def push(self, x: int) -> None:
+        self.queue.append(x)
+        size = len(self.queue)
         while size > 1:
-            self.items.append(self.items.pop(0))
+            self.queue.append(self.queue.pop(0))
             size -= 1
 
     def pop(self) -> int:
-        if self.empty():
-            return
-        return self.items.pop(0)
+        return self.queue.pop(0)
 
     def top(self) -> int:
-        if self.empty():
-            return
-        return self.items[0]
+        return self.queue[0]
 
     def empty(self) -> bool:
-        return not self.items
-
-
-
+        return not self.queue
 # Your MyStack object will be instantiated and called as such:
 # obj = MyStack()
 # obj.push(x)

@@ -10,21 +10,20 @@ from typing import List
 class Solution:
     def evalRPN(self, tokens: List[str]) -> int:
         stack = []
-        for token in tokens:
-            if token[-1].isdigit():
-                stack.append(int(token))
+        for c in tokens:
+            if c[-1].isdigit():
+                stack.append(int(c))
             else:
-                y, x = stack.pop(), stack.pop()
-                ret = None
-                if token == '+':
-                    ret = x + y
-                elif token == '-':
-                    ret = x - y
-                elif token == '*':
-                    ret = x * y
-                elif token == '/':
-                    ret = int(x / float(y))                
-                stack.append(ret)
+                y = stack.pop()
+                x = stack.pop()
+                if c == '+':
+                    stack.append(x+y)
+                elif c == '-':
+                    stack.append(x-y)
+                elif c == '*':
+                    stack.append(x*y)
+                else:
+                    stack.append(int(x/float(y)))
         return stack[0]
         
 # @lc code=end

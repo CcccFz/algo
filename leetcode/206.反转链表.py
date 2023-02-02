@@ -26,6 +26,5 @@ class Solution:
             cur.next = prev
             prev = cur
         return prev
-
 # @lc code=end
 

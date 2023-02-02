@@ -4,22 +4,25 @@
 # [239] 滑动窗口最大值
 #
 from typing import List
-
+from collections import deque
 # @lc code=start
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        size = len(nums)
-        if size <= 1 or k == 0:
-            return nums
-        ret, queue = [], []
-        for i in range(size):
-            if queue and queue[0] == i - k:
-                queue.pop(0)
-            while queue and nums[queue[-1]] < nums[i]:
+        queue = deque()
+        for i in range(k):
+            while queue and nums[i] > nums[queue[-1]]:
                 queue.pop()
             queue.append(i)
-            if i >= k - 1:
-                ret.append(nums[queue[0]])
+
+        ret = [nums[queue[0]]]
+        for i in range(k, len(nums)):
+            if i - k == queue[0]:
+                queue.popleft()
+            while queue and nums[i] > nums[queue[-1]]:
+                queue.pop()
+            queue.append(i)
+            ret.append(nums[queue[0]])
+
         return ret
 # @lc code=end
 s = Solution()

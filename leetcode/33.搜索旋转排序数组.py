@@ -7,24 +7,22 @@ from typing import List
 # @lc code=start
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        max_idx = len(nums)-1
-        left, right = 0, max_idx
-        while left <= right:
-            mid = left + ((right-left)>>1)
+        low, high = 0, len(nums)-1
+        while low <= high:
+            mid = low + ((high-low)>>1)
             if nums[mid] == target:
                 return mid
-            elif nums[0] <= nums[mid]:
+            if nums[mid] >= nums[0]:
                 if nums[0] <= target < nums[mid]:
-                    right = mid - 1
+                    high = mid - 1
                 else:
-                    left = mid + 1
+                    low = mid + 1
             else:
-                if nums[mid] < target <= nums[max_idx]:
-                    left = mid + 1
+                if nums[mid] < target <= nums[-1]:
+                    low = mid + 1
                 else:
-                    right = mid - 1
+                    high = mid - 1
         return -1
-
 # @lc code=end
 s = Solution()
 print(s.search([4,5,6,7,0,1,2], 0))

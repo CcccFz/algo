@@ -7,16 +7,16 @@
 # @lc code=start
 class Solution:
     def mySqrt(self, x: int) -> int:
-        left, right = 0, x
-        ans = -1
-        while left <= right:
-            mid = left + ((right-left)>>1)
+        low, high = 0, x
+        while low <= high:
+            mid = low + ((high-low)>>1)
             if mid * mid > x:
-                right = mid - 1
+                high = mid - 1
             else:
-                ans = mid
-                left = mid + 1
-        return ans
+                if (mid+1) * (mid+1) > x:
+                    return mid
+                low = mid + 1
+        return -1
 # @lc code=end
 s = Solution()
 print(s.mySqrt(4))

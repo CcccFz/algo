@@ -9,31 +9,29 @@ from typing import List
 import random
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
-        self.k = k-1
-        self.quick_sort(nums, 0, len(nums)-1)
-        return nums[self.k]
-
-    def quick_sort(self, nums: List[int], start, end: int) -> int:
-        if start < end:
-            mid = self.partition(nums, start, end)
-            if mid == self.k:
-                return
-            elif mid > self.k:
-                return self.quick_sort(nums, start, mid-1)
-            elif mid < self.k:
-                return self.quick_sort(nums, mid+1, end)
-            
-    def partition(self, nums: List[int], start, end: int) -> int:
-        idx = random.randint(start, end)   
-        nums[end], nums[idx] = nums[idx], nums[end]
-
-        i = start
-        for j in range(start, end):
-            if nums[j] > nums[end]:
-                nums[i], nums[j] = nums[j], nums[i]
-                i += 1
-        nums[i], nums[end] = nums[end], nums[i]
-        return i
+        def partition(nums, low, high):
+            idx = random.randint(low, high)
+            nums[idx], nums[high] = nums[high], nums[idx]
+            i = low
+            for j in range(low, high):
+                if nums[j] > nums[high]:
+                    nums[i], nums[j] = nums[j], nums[i]
+                    i += 1
+            nums[i], nums[high] = nums[high], nums[i]
+            return i
+        
+        def quick_sort(nums, low, high):
+            if low > high:
+                return -1
+            mid = partition(nums, low, high)
+            if mid + 1 < k:
+                return quick_sort(nums, mid + 1, high)
+            elif mid + 1 > k:
+                return quick_sort(nums, low, mid - 1)
+            else:
+                return nums[mid]
+        
+        return quick_sort(nums, 0, len(nums)-1)
 
     # def findKthLargest(self, nums: List[int], k: int) -> int:
     #     nums.sort()

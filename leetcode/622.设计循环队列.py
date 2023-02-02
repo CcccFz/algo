@@ -6,17 +6,15 @@
 
 # @lc code=start
 class MyCircularQueue:
-
     def __init__(self, k: int):
-        self.cap = k+1
-        self.data = [None] * self.cap
-        self.head = 0
-        self.tail = 0
+        self.cap = k + 1
+        self.vals = [None] * self.cap
+        self.head, self.tail = 0, 0
 
     def enQueue(self, value: int) -> bool:
         if self.isFull():
             return False
-        self.data[self.tail] = value
+        self.vals[self.tail] = value
         self.tail = (self.tail+1) % self.cap
         return True
 
@@ -29,19 +27,18 @@ class MyCircularQueue:
     def Front(self) -> int:
         if self.isEmpty():
             return -1
-        return self.data[self.head]
+        return self.vals[self.head]
 
     def Rear(self) -> int:
         if self.isEmpty():
             return -1
-        return self.data[(self.tail-1+self.cap) % self.cap]
-
+        return self.vals[(self.tail-1+self.cap)%self.cap]
+   
     def isEmpty(self) -> bool:
         return self.head == self.tail
-
+   
     def isFull(self) -> bool:
         return (self.tail+1) % self.cap == self.head
-
 
 # Your MyCircularQueue object will be instantiated and called as such:
 # obj = MyCircularQueue(k)

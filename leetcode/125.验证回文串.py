@@ -16,18 +16,13 @@ def is_valid(c):
 class Solution:
     def isPalindrome(self, s: str) -> bool:
         s = s.lower()
-        i, j = 0, len(s)-1
-        while i < j:
-            if not is_valid(s[i]):
-                i += 1
-                continue
-            if not is_valid(s[j]):
-                j -= 1
-                continue
-            if s[i] != s[j]:
+        s = [c for c in s if 'a' <= c <= 'z' or '0' <= c <= '9']
+        low, high = 0, len(s)-1
+        while low <= high:
+            if s[low] != s[high]:
                 return False
-            i += 1
-            j -= 1
+            low += 1
+            high -= 1
         return True
 
     # def isPalindrome(self, s: str) -> bool:

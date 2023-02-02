@@ -6,56 +6,56 @@
 
 # @lc code=start
 class Node:
-    def __init__(self, key, value):
+    def __init__(self, key=None, val=None):
         self.key = key
-        self.value = value
+        self.val = val
         self.prev = None
         self.next = None
-
+        
 class LRUCache:
     def __init__(self, capacity: int):
-        self.capacity = capacity
-        self.hash = {}
-        self.head = Node(None, -1)
-        self.tail = Node(None, -1)
+        self.cap = capacity
+        self.dic = {}
+        self.head = Node()
+        self.tail = Node()
         self.head.next = self.tail
         self.tail.prev = self.head
 
     def get(self, key: int) -> int:
-        if key in self.hash:
-            node = self.hash[key]
-            self.move_to_first(node)
-            return node.value
+        if key in self.dic:
+            node = self.dic[key]
+            self.pop_from(node)
+            self.insert_to_head(node)
+            return node.val
         return -1
 
     def put(self, key: int, value: int) -> None:
-        if key in self.hash:
-            node = self.hash[key]
-            self.move_to_first(node)
-            node.value = value 
+        if key in self.dic:
+            node = self.dic[key]
+            node.val = value
+            self.pop_from(node)
+            self.insert_to_head(node)
         else:
-            if len(self.hash) == self.capacity:
-                end = self.tail.prev
-                self.pop_node(end)
-                self.hash.pop(end.key)
+            if len(self.dic) == self.cap:
+                node = self.pop_from_tail()
+                self.dic.pop(node.key)
             node = Node(key, value)
-            self.insert_to_first(node)
-            self.hash[key] = node
+            self.insert_to_head(node)
+            self.dic[key] = node
 
-    def move_to_first(self, node):
-        self.pop_node(node)
-        self.insert_to_first(node)
+    def insert_to_head(self, node):
+        node.prev = self.head
+        node.next = self.head.next
+        self.head.next = node
+        node.next.prev = node
 
-    def pop_node(self, node):
+    def pop_from(self, node):
         node.prev.next = node.next
         node.next.prev = node.prev
+        return node
 
-    def insert_to_first(self, node):
-        first = self.head.next
-        node.prev = self.head
-        node.next = first
-        self.head.next = node
-        first.prev = node        
+    def pop_from_tail(self):
+        return self.pop_from(self.tail.prev)
 
 # Your LRUCache object will be instantiated and called as such:
 # obj = LRUCache(capacity)

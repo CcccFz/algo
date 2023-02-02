@@ -10,18 +10,16 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        left, right = 0, len(nums)-1    
-        cur = 0
-        while cur <= right:
-            if nums[cur] == 0 and cur >= left:
-                nums[left], nums[cur] = nums[cur], nums[left]
-                left += 1
+        cur, low, high = 0, 0, len(nums)-1
+        while cur <= high:
+            if nums[cur] == 0 and cur >= low:
+                nums[cur], nums[low] = nums[low], nums[cur]
+                low += 1
             elif nums[cur] == 2:
-                nums[right], nums[cur] = nums[cur], nums[right]
-                right -= 1
+                nums[cur], nums[high] = nums[high], nums[cur]
+                high -= 1
             else:
                 cur += 1
-
 # @lc code=end
 s = Solution()
 items = [2,0,2,1,1,0]
