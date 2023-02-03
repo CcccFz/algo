@@ -16,9 +16,9 @@ def is_valid(c):
 class Solution:
     def isPalindrome(self, s: str) -> bool:
         s = s.lower()
-        s = [c for c in s if 'a' <= c <= 'z' or '0' <= c <= '9']
+        s = [c for c in s if '0' <= c <= '9' or 'a' <= c <= 'z']
         low, high = 0, len(s)-1
-        while low <= high:
+        while low < high:
             if s[low] != s[high]:
                 return False
             low += 1

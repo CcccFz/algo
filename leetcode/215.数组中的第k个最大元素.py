@@ -9,6 +9,17 @@ from typing import List
 import random
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
+        def quick_sort(nums, low, high):
+            if low > high:
+                return -1
+            mid = partition(nums, low, high)
+            if mid + 1 < k:
+                return quick_sort(nums, mid+1, high)
+            elif mid + 1 > k:
+                return quick_sort(nums, low, mid-1)
+            else:
+                return nums[mid]
+        
         def partition(nums, low, high):
             idx = random.randint(low, high)
             nums[idx], nums[high] = nums[high], nums[idx]
@@ -19,19 +30,8 @@ class Solution:
                     i += 1
             nums[i], nums[high] = nums[high], nums[i]
             return i
-        
-        def quick_sort(nums, low, high):
-            if low > high:
-                return -1
-            mid = partition(nums, low, high)
-            if mid + 1 < k:
-                return quick_sort(nums, mid + 1, high)
-            elif mid + 1 > k:
-                return quick_sort(nums, low, mid - 1)
-            else:
-                return nums[mid]
-        
-        return quick_sort(nums, 0, len(nums)-1)
+
+        return quick_sort(nums, 0, len(nums)-1)       
 
     # def findKthLargest(self, nums: List[int], k: int) -> int:
     #     nums.sort()

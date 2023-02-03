@@ -13,8 +13,9 @@ class Solution:
         for i, num in enumerate(nums):
             if target-num in dic:
                 return [dic[target-num], i]
-            dic[num] = i
-        return []
+            if num not in dic:
+                dic[num] = i
+        return [-1, -1]
 # @lc code=end
 solution = Solution()
 print(solution.twoSum([2,7,11,15], 9))

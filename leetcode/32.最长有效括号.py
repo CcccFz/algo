@@ -8,12 +8,12 @@
 class Solution:
     def longestValidParentheses(self, s: str) -> int:
         longest = 0
-        stack  = []
+        stack = []
         for i, c in enumerate(s):
-            if stack and s[stack[-1]] == '(' and c == ')':
+            if stack and c == ')' and s[stack[-1]] == '(':
                 stack.pop()
                 if stack:
-                    longest = max(longest, i - stack[-1])
+                    longest = max(longest, i-stack[-1])
                 else:
                     longest = i + 1
             else:

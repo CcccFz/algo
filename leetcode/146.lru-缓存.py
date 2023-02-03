@@ -9,8 +9,7 @@ class Node:
     def __init__(self, key=None, val=None):
         self.key = key
         self.val = val
-        self.prev = None
-        self.next = None
+        self.prev, self.next = None, None
         
 class LRUCache:
     def __init__(self, capacity: int):
@@ -41,13 +40,13 @@ class LRUCache:
                 self.dic.pop(node.key)
             node = Node(key, value)
             self.insert_to_head(node)
-            self.dic[key] = node
-
+            self.dic[node.key] = node
+       
     def insert_to_head(self, node):
         node.prev = self.head
         node.next = self.head.next
+        self.head.next.prev = node
         self.head.next = node
-        node.next.prev = node
 
     def pop_from(self, node):
         node.prev.next = node.next

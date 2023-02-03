@@ -12,7 +12,7 @@ class Solution:
         """
         cur, low, high = 0, 0, len(nums)-1
         while cur <= high:
-            if nums[cur] == 0 and cur >= low:
+            if nums[cur] == 0 and cur > low:
                 nums[cur], nums[low] = nums[low], nums[cur]
                 low += 1
             elif nums[cur] == 2:

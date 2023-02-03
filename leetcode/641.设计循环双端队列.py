@@ -23,19 +23,19 @@ class MyCircularDeque:
         if self.isFull():
             return False
         self.vals[self.tail] = value
-        self.tail = (self.tail+1) % self.cap
+        self.tail = (self.tail+1)%self.cap
         return True
 
     def deleteFront(self) -> bool:
         if self.isEmpty():
             return False
-        self.head = (self.head+1) % self.cap
+        self.head = (self.head+1)%self.cap
         return True
 
     def deleteLast(self) -> bool:
         if self.isEmpty():
             return False
-        self.tail = (self.tail-1+self.cap) % self.cap
+        self.tail = (self.tail-1+self.cap)%self.cap
         return True
 
     def getFront(self) -> int:
@@ -52,7 +52,7 @@ class MyCircularDeque:
         return self.head == self.tail
 
     def isFull(self) -> bool:
-        return (self.tail+1) % self.cap == self.head
+        return (self.tail+1)%self.cap == self.head
 
 # Your MyCircularDeque object will be instantiated and called as such:
 # obj = MyCircularDeque(k)

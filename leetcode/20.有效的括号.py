@@ -13,7 +13,7 @@ class Solution:
             if c in dic:
                 stack.append(c)
             else:
-                if not stack or dic[stack.pop()] != c:
+                if not stack or c != dic[stack.pop()]:
                     return False
         return not stack
 # @lc code=end

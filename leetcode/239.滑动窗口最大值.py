@@ -13,16 +13,15 @@ class Solution:
             while queue and nums[i] > nums[queue[-1]]:
                 queue.pop()
             queue.append(i)
-
+        
         ret = [nums[queue[0]]]
         for i in range(k, len(nums)):
-            if i - k == queue[0]:
+            if i-k == queue[0]:
                 queue.popleft()
             while queue and nums[i] > nums[queue[-1]]:
                 queue.pop()
             queue.append(i)
             ret.append(nums[queue[0]])
-
         return ret
 # @lc code=end
 s = Solution()

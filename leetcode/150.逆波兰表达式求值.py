@@ -16,14 +16,16 @@ class Solution:
             else:
                 y = stack.pop()
                 x = stack.pop()
+                ret = 0
                 if c == '+':
-                    stack.append(x+y)
+                    ret = x + y
                 elif c == '-':
-                    stack.append(x-y)
+                    ret = x - y
                 elif c == '*':
-                    stack.append(x*y)
+                    ret = x * y
                 else:
-                    stack.append(int(x/float(y)))
+                    ret = int(x/float(y))
+                stack.append(ret)
         return stack[0]
         
 # @lc code=end

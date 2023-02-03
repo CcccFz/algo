@@ -8,8 +8,8 @@
 class MyQueue:
 
     def __init__(self):
-        self.push_stack = []
         self.stack = []
+        self.push_stack = []
 
     def push(self, x: int) -> None:
         self.push_stack.append(x)
@@ -23,7 +23,7 @@ class MyQueue:
     def peek(self) -> int:
         if not self.stack:
             while self.push_stack:
-                self.stack.append(self.push_stack.pop())
+                self.stack.append(self.push_stack.pop())                
         return self.stack[-1]
 
     def empty(self) -> bool:

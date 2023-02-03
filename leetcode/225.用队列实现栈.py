@@ -5,20 +5,21 @@
 #
 
 # @lc code=start
+from collections import deque
 # 法一： 两个队列
 class MyStack:
     def __init__(self):
-        self.queue = []
-        self.push_queue = []
+       self.queue = deque()
+       self.push_queue = deque()
 
     def push(self, x: int) -> None:
         self.push_queue.append(x)
         while self.queue:
-            self.push_queue.append(self.queue.pop(0))
-        self.queue, self.push_queue = self.push_queue, self.queue        
+            self.push_queue.append(self.queue.popleft())
+        self.queue, self.push_queue = self.push_queue, self.queue
 
     def pop(self) -> int:
-        return self.queue.pop(0)
+        return self.queue.popleft()
 
     def top(self) -> int:
         return self.queue[0]
@@ -29,17 +30,17 @@ class MyStack:
 # 法二： 一个队列
 class MyStack2:
     def __init__(self):
-        self.queue = []
+        self.queue = deque()
 
     def push(self, x: int) -> None:
         self.queue.append(x)
         size = len(self.queue)
         while size > 1:
-            self.queue.append(self.queue.pop(0))
+            self.queue.append(self.queue.popleft())
             size -= 1
 
     def pop(self) -> int:
-        return self.queue.pop(0)
+        return self.queue.popleft()
 
     def top(self) -> int:
         return self.queue[0]
