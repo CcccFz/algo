@@ -143,3 +143,18 @@ if __name__ == '__main__':
     nums = [4, 2, 5, 6, 1, 7, 3]
     bst = BinarySearchTree(nums)
     print(bst)
+
+    bst.insert(1)
+    bst.insert(4)
+    print(bst)
+
+    nodes, parents = bst.search(2)
+    for i in range(len(nodes)):
+        print(parents[i].val, nodes[i].val)
+    
+    bst.insert(6)
+    bst.insert(7)
+    print(bst)
+
+    bst.delete(7)
+    print(bst)
