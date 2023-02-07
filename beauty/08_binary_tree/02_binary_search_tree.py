@@ -46,11 +46,11 @@ class BinarySearchTree():
 
     def delete(self, val):
         nodes, parents = self.search(val)
-        for i in range(len(nodes)):
-            self.delete_node(nodes[i], parents[i])
+        while nodes:
+            self.delete_node(nodes[0], parents[0])
+            nodes, parents = self.search(val)
 
-    def delete_node(self, node, parent):
-        cur = node
+    def delete_node(self, cur, parent):
         if cur.left and cur.right:
             minParent = cur
             minCur = cur.right
@@ -80,7 +80,7 @@ class BinarySearchTree():
             return
         while cur.left:
             cur = cur.left
-        return cur
+        return cur.val
 
     def max(self):
         cur = self.root
@@ -88,7 +88,7 @@ class BinarySearchTree():
             return
         while cur.right:
             cur = cur.right
-        return cur
+        return cur.val
 
     def depth(self):
         def _depth(cur):
@@ -158,3 +158,12 @@ if __name__ == '__main__':
 
     bst.delete(7)
     print(bst)
+
+    bst.delete(6)
+    print(bst)
+
+    bst.delete(4)
+    print(bst)
+
+    print(bst.max())
+    print(bst.min())
