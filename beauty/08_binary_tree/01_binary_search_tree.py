@@ -9,8 +9,8 @@ class BinarySearchTree():
         for val in vals:
             self.insert(val)
     
-    def insert(self, val):        
-        node = Node(val)        
+    def insert(self, val):
+        node = Node(val)
         if not self.root:
             self.root = node
             return
@@ -26,31 +26,28 @@ class BinarySearchTree():
                 if not cur.right:
                     cur.right = node
                     return
-                cur = cur.right        
+                cur = cur.right
 
     def search(self, val):
-        parent = None
-        cur = self.root
-        nodes, parents = [], []
+        parents, nodes = [], []
+        parent, cur = None, self.root
         while cur:
             if val < cur.val:
-                parent = cur
-                cur = cur.left
+                parent, cur = cur, cur.left
             else:
                 if val == cur.val:
-                    nodes.append(cur)
                     parents.append(parent)
-                parent = cur
-                cur = cur.right            
-        return nodes, parents
+                    nodes.append(cur)
+                parent, cur = cur, cur.right
+        return parents, nodes
 
     def delete(self, val):
-        nodes, parents = self.search(val)
+        parents, nodes = self.search(val)
         while nodes:
-            self.delete_node(nodes[0], parents[0])
-            nodes, parents = self.search(val)
+            self.delete_node(parents[0], nodes[0])
+            parents, nodes = self.search(val)
 
-    def delete_node(self, cur, parent):
+    def delete_node(self, parent, cur):
         if cur.left and cur.right:
             minParent = cur
             minCur = cur.right
@@ -58,21 +55,17 @@ class BinarySearchTree():
                 minParent = minCur
                 minCur = minCur.left
             cur.val = minCur.val
-            cur = minCur
             parent = minParent
+            cur = minCur
+        
+        child = cur.left if cur.left else cur.right
 
-        child = None
-        if cur.left:
-            child = cur.left
-        elif cur.right:
-            child = cur.right
-
-        if not parent:
+        if parent == None:
             self.root = child
         elif parent.left == cur:
             parent.left = child
         else:
-            parent.right = child
+            parent.right = child    
 
     def min(self):
         cur = self.root
@@ -94,9 +87,10 @@ class BinarySearchTree():
         def _depth(cur):
             if not cur:
                 return 0
-            if not cur.left and not cur.right:
+            elif not cur.left and not cur.right:
                 return 0
-            return max(_depth(cur.left), _depth(cur.right)) + 1
+            else:
+                return max(_depth(cur.left), _depth(cur.right)) + 1
 
         return _depth(self.root)
 
@@ -112,25 +106,23 @@ class BinarySearchTree():
         print(ret)
     
     def bfs(self):
-        cur = self.root
-        if not cur:
+        if not self.root:
             return
-        
+
         ret = []
-        level = self.depth()+1
+        level = self.depth() + 1
         for i in range(level):
             ret.append([None]*2**i)
 
-        queue = []
-        queue.append((1, cur))
         level = 1
+        queue = [(1, self.root)]
         while queue:
             i, node = queue.pop(0)
-            if i >= 2 ** level:
+            if i >= 2**level:
                 print(str(ret[level-1])[1:-1])
                 level += 1
             if node:
-                ret[level-1][i%(2**(level-1))] = node.val
+                ret[level-1][i%2**(level-1)] = node.val
                 queue.append((i*2, node.left))
                 queue.append((i*2+1, node.right))
 
@@ -148,10 +140,10 @@ if __name__ == '__main__':
     bst.insert(4)
     print(bst)
 
-    nodes, parents = bst.search(2)
+    parents, nodes = bst.search(2)
     for i in range(len(nodes)):
         print(parents[i].val, nodes[i].val)
-    
+
     bst.insert(6)
     bst.insert(7)
     print(bst)
