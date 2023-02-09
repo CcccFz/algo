@@ -12,39 +12,35 @@ class Heap:
     def insert(self, val):
         if self.len == self.cap:
             return False
-
         self.len += 1
         self.vals[self.len] = val
 
-        # 从下到上堆化
         i = self.len
-        while i//2 and self.vals[i] > self.vals[i//2]:
+        while i//2 and self.vals[i//2] < self.vals[i]:
             self.vals[i], self.vals[i//2] = self.vals[i//2], self.vals[i]
             i = i//2
-
+        
         return True
     
-    def remove_max(self):
+    def remove_top(self):
         if self.len == 0:
             return False
-        
         self.vals[1] = self.vals[self.len]
         self.len -= 1
 
-        # 从上到下堆化
         self.heapify(1)
-        return True
+        return True     
     
     def heapify(self, i):
         while True:
             max_i = i
-            if i*2 <= self.len and self.vals[i*2] > self.vals[i]:
+            if i*2 <= self.len and self.vals[i*2] > self.vals[max_i]:
                 max_i = i*2
             if i*2+1 <= self.len and self.vals[i*2+1] > self.vals[max_i]:
                 max_i = i*2+1
             if max_i == i:
                 break
-            self.vals[i], self.vals[max_i] = self.vals[max_i], self.vals[i]
+            self.vals[max_i], self.vals[i] = self.vals[i], self.vals[max_i]
             i = max_i
 
     def draw(self):
@@ -56,19 +52,19 @@ class Heap:
                     s = s[0:i]+' ;'+s[i+1:]
                     break
             return s
-
+        
         if self.len == 0:
             return
-        level = math.ceil(math.log(self.len+1, 2))
         ret = []
+        level = math.ceil((self.len+1)/2)
         for i in range(level):
             ret.append([None]*2**i)
         
-        level = 1
         queue = [(1,self.vals[1])]
+        level = 1
         while queue:
             i, val = queue.pop(0)
-            if i >= 2**level:     
+            if i >= 2**level:
                 print(split_level(str(ret[level-1])[1:-1]))
                 level += 1
             if val is not None:
@@ -89,14 +85,14 @@ print(heap)
 heap.insert(18)
 print(heap)
 
-heap.remove_max()
+heap.remove_top()
 print(heap)
 
 heap.insert(19)
 print(heap)
 
-heap.remove_max()
+heap.remove_top()
 print(heap)
 
-heap.remove_max()
+heap.remove_top()
 print(heap)
