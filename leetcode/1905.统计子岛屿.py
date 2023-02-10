@@ -12,17 +12,21 @@ class Solution:
 
         def dfs(i, j):
             if not in_area(i, j) or grid2[i][j] == 0:
-                return 1
-            if grid1[i][j] == 0:
-                return 0
+                return
+            self.isSub &= grid1[i][j]
             grid2[i][j] = 0
-            return dfs(i, j-1) & dfs(i, j+1) & dfs(i-1, j) & dfs(i+1, j)
+            dfs(i, j-1)
+            dfs(i, j+1)
+            dfs(i-1, j)
+            dfs(i+1, j)
             
         ans = 0
         for i in range(len(grid2)):
             for j in range(len(grid2[0])):
                 if grid2[i][j] == 1:
-                    if dfs(i, j):
+                    self.isSub = 1
+                    dfs(i, j)
+                    if self.isSub:
                         ans += 1
         return ans
 # @lc code=end
