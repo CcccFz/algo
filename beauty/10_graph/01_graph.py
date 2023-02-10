@@ -60,8 +60,35 @@ class Graph:
         return ret
 
     def dfs(self, _from, to):
-        pass
+        def _dfs(_from):
+            nonlocal found
+            visited[_from] = True
+            if found:
+                return
+            if _from == to:
+                found = True
+                ret.insert(0, _from)
+                while prev[_from] is not None:
+                    _from = prev[_from]
+                    ret.insert(0, _from)
+                return
 
+            for i in self.vertex[_from]:
+                if visited[i]:
+                    continue
+                prev[i] = _from
+                _dfs(i)
+
+        if _from == to:
+            return [_from]
+        
+        ret = []
+        visited = [False] * len(self)
+        prev = [None] * len(self)
+        found = False
+
+        _dfs(_from)
+        return ret
 
     def __len__(self):
         return len(self.vertex)
@@ -86,4 +113,4 @@ if __name__ == '__main__':
     print(graph)
     print(graph.bfs(0, 7))    # [0, 1, 2, 5, 7]
     print(graph.find_vertex_at_degree(0, 3)) # 3:5,6 4:7
-    # print(graph.dfs(0, 7))  # [0, 1, 2, 5, 4, 6, 7]    
+    print(graph.dfs(0, 7))  # [0, 1, 2, 5, 4, 6, 7]
