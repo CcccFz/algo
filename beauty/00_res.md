@@ -1,18 +1,23 @@
 https://github.com/wangzheng0822/algo
 https://github.com/iostalks/Algorithms
 
-快慢指针
-双指针
-双区间
-二分法
-栈法
-队列法
-映射法
-递归
-二叉树法
-dfs
-bfs
-建堆法
+method:
+    fast/slow pointer
+    double pointer
+    double interval
+    binary search
+    stack
+    queue
+    hash
+    binary tree
+    dfs
+    bfs
+    heap
+    greedy
+    divide and conquer
+    recursion
+    back tracking
+    dp
 
 - 散列表：插入删除查找都是O(1), 是最常用的，但其缺点是不能有序遍历以及扩容缩容的性能损耗。适用于那些不需要有序遍历，数据更新不那么频繁的。
 - 跳表：插入删除查找都是O(logn), 并且能顺序遍历。缺点是空间复杂度O(n)。适用于不那么在意内存空间的，其有序遍历和区间查找非常方便。
