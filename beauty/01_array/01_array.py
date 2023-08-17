@@ -9,7 +9,7 @@ class Array:
             return False
         if idx > self.len:
             return False
-        elif idx < self.len:
+        if idx < self.len:
             for i in range(self.len, idx, -1):
                 self.data[i] = self.data[i-1]
         self.data[idx] = val
@@ -19,10 +19,10 @@ class Array:
     def delete(self, idx):
         if self.len == 0:
             return False
-        last = self.len - 1
-        if idx >= self.len:
+        last = self.len-1
+        if idx > last:
             return False
-        elif idx < last:
+        if idx < last:
             for i in range(idx, last):
                 self.data[i] = self.data[i+1]
         self.len -= 1
