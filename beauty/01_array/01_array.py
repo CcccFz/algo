@@ -42,32 +42,18 @@ class Array:
         return str(self.data[:self.len])
 
 
-arr = Array(3)
+arr = Array(2)
 arr.insert(1, 'x')
 arr.insert(0, 'a')
 arr.insert(1, 'b')
 arr.insert(2, 'c')
-arr.insert(3, 'd')
 print(arr)
 
 arr.delete(2)
-print(arr)
-
-arr.insert(2, 'c')
 print(arr)
 
 arr.delete(1)
 print(arr)
 
-arr.insert(1, 'b')
+arr.insert(0, 'b')
 print(arr)
-
-print(arr.get(1))
-print(arr.get(4))
-print(arr.find('c'))
-
-arr.delete(0)
-arr.delete(2)
-print(arr)
-print(arr.get(1))
-print(arr.get(2))
