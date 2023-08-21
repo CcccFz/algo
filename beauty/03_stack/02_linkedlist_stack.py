@@ -20,11 +20,11 @@ class Stack():
     
     def pop(self):
         if self.top is None:
-            return 
+            return None
         val = self.top.val
         self.top = self.top.next
         self.len -= 1
-        return True
+        return val
 
     def __repr__(self):
         cur = self.top
@@ -33,6 +33,7 @@ class Stack():
             vals.insert(0, cur.val)
             cur = cur.next
         return str(vals)
+
 
 stack = Stack(2)
 stack.push(1)

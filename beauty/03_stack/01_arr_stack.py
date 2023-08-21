@@ -1,8 +1,8 @@
 class Stack:
     def __init__(self, cap):
-        self.cap = cap
-        self.top = 0
-        self.data = [None] * cap
+       self.cap = cap
+       self.top = 0
+       self.data = [None] * cap
         
     def push(self, val):
         if self.top == self.cap:
@@ -12,11 +12,10 @@ class Stack:
         return True
 
     def pop(self):
-        if self.top == 0:
-            return None
-        val = self.data[self.top-1]
-        self.top -= 1
-        return val
+        if self.top > 0:
+            val = self.data[self.top-1]
+            self.top -= 1
+            return val       
 
     def __repr__(self):
         return str(self.data[:self.top])

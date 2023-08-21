@@ -19,8 +19,8 @@ class CircleQueue:
         return val
 
     def __repr__(self) -> str:
-        vals = []
         cur = self.head
+        vals = []
         while cur != self.tail:
             vals.append(self.data[cur])
             cur = (cur+1) % self.cap

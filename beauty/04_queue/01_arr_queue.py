@@ -21,7 +21,7 @@ class Queue:
             return None
         val = self.data[self.head]
         self.head += 1
-        return val
+        return val        
 
     def __repr__(self):
         return str(self.data[self.head:self.tail])

@@ -3,10 +3,10 @@ class Node:
         self.val = val
         self.next = None
 
-
 class Queue:
     def __init__(self, cap):
-        self.cap, self.len = cap, 0
+        self.cap = cap
+        self.len = 0
         self.head = Node()
         self.tail = self.head
 
@@ -24,13 +24,13 @@ class Queue:
         val = self.head.next.val
         self.head.next = self.head.next.next
         self.len -= 1
-        if self.len == 0:
+        if self.head.next is None:
             self.tail = self.head
         return val
 
     def __repr__(self) -> str:
-        vals = []
         cur = self.head.next
+        vals = []
         while cur:
             vals.append(cur.val)
             cur = cur.next
