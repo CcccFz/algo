@@ -3,23 +3,21 @@ from typing import List
 O_nlogn_sort = __import__('02_O_nlogn_sort')
 
 def bucket_sort(nums: List[int], bucket_size: int):
-    min_num, max_num = min(nums), max(nums)
-    bucket_cnt = math.ceil((max_num-min_num+1)/bucket_size)
+    num_max, num_min = max(nums), min(nums)
+    bucket_cnt = math.ceil((num_max-num_min+1)/bucket_size)
     buckets = [[] for _ in range(bucket_cnt)]
     for num in nums:
-        buckets[(num-min_num)//bucket_size].append(num)
-    ret = []
+        buckets[(num-num_min)//bucket_size].append(num)
     for bucket in buckets:
         O_nlogn_sort.quick_sort(bucket)
-        ret.extend(bucket)
-    return ret
+    return [num for bucket in buckets for num in bucket]
 
 def count_sort(nums: List[int]):
-    max_num, size = max(nums), len(nums)
-    counts = [0] * (max_num+1)
+    num_max, size = max(nums), len(nums)
+    counts = [0] * (num_max+1)
     for num in nums:
         counts[num] += 1
-    for i in range(1, max_num+1):
+    for i in range(1, num_max+1):
         counts[i] += counts[i-1]
     ret = [0] * size
     for i in range(size-1, -1, -1):
@@ -28,8 +26,8 @@ def count_sort(nums: List[int]):
     return ret
 
 def radix_sort(nums: List[int]):
-    max_num, k = max(nums), 1
-    while max_num >= 10**k:
+    num_max, k = max(nums), 1
+    while num_max >= 10**k:
         k += 1
     for i in range(k):
         buckets = [[] for _ in range(10)]
