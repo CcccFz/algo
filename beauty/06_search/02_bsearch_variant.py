@@ -14,7 +14,7 @@ def bsearch_first(nums, target):
 
 def bsearch_last(nums, target):
     low, high = 0, len(nums)-1
-    size = len(nums)
+    last = high
     while low <= high:
         mid = low + ((high-low)>>1)
         if nums[mid] < target:
@@ -22,7 +22,7 @@ def bsearch_last(nums, target):
         elif nums[mid] > target:
             high = mid - 1
         else:
-            if mid == size - 1 or nums[mid+1] != target:
+            if mid == last or nums[mid+1] != target:
                 return mid
             low = mid + 1
     return -1
@@ -41,13 +41,13 @@ def bsearch_first_not_less(nums, target):
 
 def bsearch_last_not_greater(nums, target):
     low, high = 0, len(nums)-1
-    size = len(nums)
+    last = high
     while low <= high:
         mid = low + ((high-low)>>1)
         if nums[mid] > target:
             high = mid - 1
         else:
-            if mid == size-1 or nums[mid+1] > target:
+            if mid == last or nums[mid+1] > target:
                 return mid
             low = mid + 1
     return -1
@@ -62,8 +62,9 @@ def my_sqrt(x):
         else:
             if x - ret <= 0.000001:
                 return round(mid, 6)
-            low = mid
-    return -1
+            else:
+                low = mid
+    return -1            
 
 a = [1, 1, 2, 3, 4, 6, 7, 7, 7, 7, 10, 22]
 print(bsearch_first(a, 0) == -1)
