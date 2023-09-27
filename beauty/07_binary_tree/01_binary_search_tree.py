@@ -14,7 +14,6 @@ class BinarySearchTree():
         if not self.root:
             self.root = node
             return
-
         cur = self.root
         while cur:
             if val < cur.val:
@@ -49,36 +48,33 @@ class BinarySearchTree():
 
     def delete_node(self, parent, cur):
         if cur.left and cur.right:
-            minParent = cur
-            minCur = cur.right
-            while minCur.left:
-                minParent = minCur
-                minCur = minCur.left
-            cur.val = minCur.val
-            parent = minParent
-            cur = minCur
+            min_parent, min_node = cur, cur.right
+            while min_node.left:
+                min_parent, min_node = min_node, min_node.left
+            cur.val = min_node.val
+            parent, cur = min_parent, min_node
         
         child = cur.left if cur.left else cur.right
 
-        if parent == None:
+        if not parent:
             self.root = child
         elif parent.left == cur:
             parent.left = child
         else:
-            parent.right = child    
+            parent.right = child
 
     def min(self):
-        cur = self.root
-        if not cur:
+        if not self.root:
             return
+        cur = self.root
         while cur.left:
             cur = cur.left
         return cur.val
 
     def max(self):
-        cur = self.root
-        if not cur:
+        if not self.root:
             return
+        cur = self.root
         while cur.right:
             cur = cur.right
         return cur.val
@@ -96,10 +92,11 @@ class BinarySearchTree():
 
     def in_order(self):
         def _in_order(cur):
-            if cur:
-                _in_order(cur.left)
-                ret.append(cur.val)
-                _in_order(cur.right)
+            if not cur:
+                return
+            _in_order(cur.left)
+            ret.append(cur.val)
+            _in_order(cur.right)
         
         ret = []
         _in_order(self.root)
@@ -108,14 +105,12 @@ class BinarySearchTree():
     def bfs(self):
         if not self.root:
             return
-
         ret = []
         level = self.depth() + 1
         for i in range(level):
             ret.append([None]*2**i)
-
-        level = 1
         queue = [(1, self.root)]
+        level = 1
         while queue:
             i, node = queue.pop(0)
             if i >= 2**level:
