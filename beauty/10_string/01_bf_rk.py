@@ -45,9 +45,9 @@ def rk(s, sub):
 s = 'a'*10000
 sub = 'a'*200+'b'
 print(bf(s, sub))
-print(bf(s, sub))
+print(bf(s, sub[:-1]))
 
 s = 'thequickbrownfoxjumpsoverthelazydog'
 sub = 'jump'
-print(bf(s, sub))
+print(bf(s, sub+'e'))
 print(bf(s, sub))

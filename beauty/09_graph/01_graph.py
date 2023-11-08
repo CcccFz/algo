@@ -3,89 +3,76 @@ class Graph:
         self.vertex = []
 
     def add_edge(self, _from, to):
-        while len(self.vertex)-1 < _from or len(self.vertex)-1 < to:
+        while len(self) <= _from or len(self) <= to:
             self.vertex.append([])
         self.vertex[_from].append(to)
-        self.vertex[to].append(_from)  # 没有此句，则为有向图
+        self.vertex[to].append(_from)
     
     def bfs(self, _from, to):
         if _from == to:
             return [_from]
-
-        ret = []
         visited = [False] * len(self)
-        prev = [None] * len(self)
-
         visited[_from] = True
+        prev = [None] * len(self)
         queue = [_from]
         while queue:
             i = queue.pop(0)
             for j in self.vertex[i]:
                 if visited[j]:
                     continue
+                visited[j] = True
                 prev[j] = i
-                if j == to:
-                    ret.insert(0, j)
+                if j == to:                
+                    ret = [j]    
                     while prev[j] is not None:
                         ret.insert(0, prev[j])
-                        j = prev[j]                        
-                    return ret                
+                        j = prev[j]
+                    return ret
                 queue.append(j)
-                visited[j] = True
-        
-        return ret
 
     def find_vertex_at_degree(self, _from, degree):
         if degree == 0:
             return [_from]
-
-        ret = []
         visited = [False] * len(self)
-
         visited[_from] = True
         queue = [_from]
         while queue:
             for _ in range(len(queue)):
                 i = queue.pop(0)
-                for j in self.vertex[i]:                
+                for j in self.vertex[i]:
                     if visited[j]:
                         continue
-                    queue.append(j)
                     visited[j] = True
+                    queue.append(j)
             degree -= 1
             if degree == 0:
-                ret = list(queue)
-                break
-
-        return ret
+                return queue
 
     def dfs(self, _from, to):
-        def _dfs(_from):
+        def _dfs(i):
             nonlocal found
-            visited[_from] = True
             if found:
                 return
-            if _from == to:
-                found = True
-                ret.insert(0, _from)
-                while prev[_from] is not None:
-                    _from = prev[_from]
-                    ret.insert(0, _from)
+            visited[i] = True
+            if i == to:
+                ret.insert(0, i)
+                while prev[i] is not None:
+                    ret.insert(0, prev[i])
+                    i = prev[i]
                 return
-
-            for i in self.vertex[_from]:
-                if visited[i]:
+            for j in self.vertex[i]:
+                if visited[j]:
                     continue
-                prev[i] = _from
-                _dfs(i)
+                prev[j] = i
+                _dfs(j)
 
         if _from == to:
             return [_from]
         
         ret = []
+        found = False
         visited = [False] * len(self)
         prev = [None] * len(self)
-        found = False
 
         _dfs(_from)
         return ret
@@ -114,3 +101,17 @@ if __name__ == '__main__':
     print(graph.bfs(0, 7))    # [0, 1, 2, 5, 7]
     print(graph.find_vertex_at_degree(0, 3)) # 3:5,6 4:7
     print(graph.dfs(0, 7))  # [0, 1, 2, 5, 4, 6, 7]
+
+
+# 0 [1, 3]
+# 1 [0, 2, 4]
+# 2 [1, 5]
+# 3 [0, 4]
+# 4 [1, 3, 5, 6]
+# 5 [2, 4, 7]
+# 6 [4, 7]
+# 7 [5, 6]
+
+# [0, 1, 2, 5, 7]
+# [5, 6]
+# [0, 1, 2, 5, 4, 6, 7]
