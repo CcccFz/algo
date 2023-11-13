@@ -7,26 +7,32 @@
 # @lc code=start
 class Solution:
     def isMatch(self, s: str, p: str) -> bool:
-        def rmatch(s, p, s_i, p_i):
-            if self.matched:
-                return
-            if p_i == len(p):
-                if s_i == len(s):
-                    self.matched = True
-                return
-            if p[p_i] == '*':
-                for i in range(s_i, len(s)+1):
-                    rmatch(s, p, i, p_i+1)
-            elif p[p_i] == '.':
-                rmatch(s, p, s_i+1, p_i+1)
-            elif s_i < len(s) and s[s_i] == p[p_i]:
-                rmatch(s, p, s_i+1, p_i+1)
-
-        self.matched = False
-        rmatch(s, p, 0, 0)
-        return self.matched
+        def rmatch(s, p, si, pi):
+            if pi == len(p):
+                if si == len(s):
+                    return True
+                return False
+            if pi+1 < len(p) and p[pi+1] == '*':
+                if rmatch(s, p, si, pi+2):
+                    return True
+                for i in range(si, len(s)):
+                    if p[pi] == '.' or p[pi] == s[i]:
+                        if rmatch(s, p, i+1, pi+2):
+                            return True
+                    else:
+                        break
+            else:
+                if si < len(s) and (p[pi] == '.' or p[pi] == s[si]):
+                    if rmatch(s, p, si+1, pi+1):
+                        return True
+            return False
+        
+        
+        return rmatch(s, p, 0, 0)
 # @lc code=end
 s = Solution()
 print(s.isMatch('aa', 'a'))
 print(s.isMatch('aa', 'a*'))
 print(s.isMatch('ab', '.*'))
+print(s.isMatch('aab', 'c*a*b'))
+print(s.isMatch('mississippi', 'mis*is*p*.'))
