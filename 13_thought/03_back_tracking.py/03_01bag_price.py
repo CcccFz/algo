@@ -1,33 +1,29 @@
-# -*- coding: UTF-8 -*-
+weights = [3, 2, 1, 1, 4]
+prices = [5, 2, 4, 2, 10]
+weight_limit = 8
+n = len(weights)
 
-cap = 8
-items = [(3, 5), (2, 2), (1, 4), (1, 2), (4, 10)]
-picks = [False] * len(items)
-picks_max_price = [False] * len(items)
+picks = [False] * n
+picks_max_price = [False] * n
 price_max = 0
 
-def _01_bag(i, weight_cur):
+def _01_bag(i, weight_cur, price_cur):
     global price_max, picks_max_price
-
-    def get_price(items, picks):
-        return sum([item[1] for i, item in enumerate(items) if picks[i]])
     
-    if weight_cur == cap or i == len(items):
-        if get_price(items, picks) > get_price(items, picks_max_price):
+    if weight_cur == weight_limit or i == n:
+        if price_cur > price_max:
+            price_max = price_cur
             picks_max_price = picks.copy()
-            price_max = get_price(items, picks_max_price)
         return
     
     picks[i] = False
-    _01_bag(i+1, weight_cur)
+    _01_bag(i+1, weight_cur, price_cur)
 
     picks[i] = True
-    if weight_cur+items[i][0] <= cap:
-        _01_bag(i+1, weight_cur+items[i][0])
+    if weight_cur+weights[i] <= weight_limit:
+        _01_bag(i+1, weight_cur+weights[i], price_cur+prices[i])
 
-if __name__ == '__main__':
-    # (weight, price)
     
-    _01_bag(0, 0)
-    print(picks_max_price)
-    print(price_max)
+_01_bag(0, 0, 0)
+print(picks_max_price)
+print(price_max)
