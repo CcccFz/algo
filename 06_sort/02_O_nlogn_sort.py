@@ -2,29 +2,29 @@ from typing import List
 import random
 
 def merge_sort(nums: List[int]):
-    def merge_sort_idx(nums, low, high):
-        if low < high:
-            mid = low + ((high-low)>>1)
-            merge_sort_idx(nums, low, mid)
-            merge_sort_idx(nums, mid+1, high)
-            merge(nums, low, mid, high)
-
-    def merge(nums, low, mid, high):
-        i, j = low, mid+1
+    def merge_sort_idx(l, r):
+        if l < r:
+            mid = l + ((r-l)>>1)
+            merge_sort_idx(l, mid)
+            merge_sort_idx(mid+1, r)
+            merge(l, mid, r)
+    
+    def merge(l, mid, r):
+        i, j = l, mid+1
         tmp = []
-        while i <= mid and j <= high:
+        while i <= mid and j <= r:
             if nums[i] <= nums[j]:
                 tmp.append(nums[i])
                 i += 1
             else:
                 tmp.append(nums[j])
                 j += 1
-        start, end = (i, mid) if i <= mid else (j, high)
+        start, end = (i, mid) if i <= mid else (j, r)
         tmp.extend(nums[start:end+1])
-        nums[low:high+1] = tmp
+        nums[l:r+1] = tmp
 
-    merge_sort_idx(nums, 0, len(nums)-1)
-
+    return merge_sort_idx(0, len(nums)-1)
+    
 
 def quick_sort(nums: List[int]):
     cnt = 0
