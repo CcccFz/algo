@@ -8,12 +8,12 @@ def merge_sort(nums: List[int]):
             merge_sort_idx(l, mid)
             merge_sort_idx(mid+1, r)
             merge(l, mid, r)
-    
+
     def merge(l, mid, r):
         i, j = l, mid+1
         tmp = []
         while i <= mid and j <= r:
-            if nums[i] <= nums[j]:
+            if nums[i] < nums[j]:
                 tmp.append(nums[i])
                 i += 1
             else:
@@ -28,41 +28,41 @@ def merge_sort(nums: List[int]):
 
 def quick_sort(nums: List[int]):
     cnt = 0
-    
-    def quick_sort_idx(nums, low, high):
-        if low < high:
-            mid = partition(nums, low, high)
-            quick_sort_idx(nums, low, mid-1)
-            quick_sort_idx(nums, mid+1, high)
 
-    def partition(nums, low, high):
-        mid = random.randint(low, high)
-        nums[mid], nums[high] = nums[high], nums[mid]
+    def quick_sort_idx(l, r):
+        if l < r:
+            mid = partition(l, r)
+            quick_sort_idx(l, mid-1)
+            quick_sort_idx(mid+1, r)
+
+    def partition(l, r):
+        mid = random.randint(l, r)
+        nums[mid], nums[r] = nums[r], nums[mid]
 
         nonlocal cnt
-        if cnt % 2 ==0:
-            i = low
-            for j in range(low, high):
-                if nums[j] < nums[high]:
+        if cnt % 2 == 0:
+            i = l
+            for j in range(l, r):
+                if nums[j] < nums[r]:
                     nums[i], nums[j] = nums[j], nums[i]
                     i += 1
-            nums[i], nums[high] = nums[high], nums[i]
+            nums[i], nums[r] = nums[r], nums[i]
         else:
-            pivot = nums[high]
-            i, j = low, high
+            pivot = nums[r]
+            i, j = l, r
             while i < j:
-                while i < j and nums[i] <= pivot:
+                while i < j and nums[i] < pivot:
                     i += 1
                 nums[j] = nums[i]
-                while i < j and nums[j] > pivot:
+                while i < j and nums[j] >= pivot:
                     j -= 1
                 nums[i] = nums[j]
-            nums[i] = pivot                
+            nums[i] = pivot
 
         cnt += 1
         return i
-    
-    quick_sort_idx(nums, 0, len(nums)-1)
+
+    quick_sort_idx(0, len(nums)-1)
 
 
 def heap_sort(nums: List[int]):
