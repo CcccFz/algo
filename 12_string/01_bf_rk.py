@@ -23,7 +23,6 @@ def rk(s, sub):
     if n < m:
         return False
     
-    hash_sub = hash(sub, 0, m)
     hash_s = hash(s, 0, m)
 
     for i in range(n-m+1):

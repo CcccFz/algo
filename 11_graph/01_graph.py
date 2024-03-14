@@ -23,7 +23,7 @@ class Graph:
                 visited[j] = True
                 prev[j] = i
                 if j == to:                
-                    ret = [j]    
+                    ret = [j]
                     while prev[j] is not None:
                         ret.insert(0, prev[j])
                         j = prev[j]
