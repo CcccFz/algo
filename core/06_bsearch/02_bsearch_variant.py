@@ -60,8 +60,7 @@ def my_sqrt(x):
         else:
             if x-ret < 0.000001:
                 return round(mid, 6)
-            else:
-                l = mid
+            l = mid
     return -1
 
 a = [1, 1, 2, 3, 4, 6, 7, 7, 7, 7, 10, 22]

@@ -21,7 +21,6 @@ def bsearch_recursion(nums, target):
             return bsearch_idx(l, mid-1)
         else:
             return mid
-    
     return bsearch_idx(0, len(nums)-1)
 
 print(bsearch([-1,0,3,5,9,12], target = 9))
