@@ -1,8 +1,8 @@
 import math
-from typing import List
+
 O_nlogn_sort = __import__('02_O_nlogn_sort')
 
-def bucket_sort(nums: List[int], bucket_size: int):
+def bucket_sort(nums, bucket_size):
     num_max, num_min = max(nums), min(nums)
     bucket_cnt = math.ceil((num_max-num_min+1)/bucket_size)
     buckets = [[] for _ in range(bucket_cnt)]
@@ -12,20 +12,20 @@ def bucket_sort(nums: List[int], bucket_size: int):
         O_nlogn_sort.quick_sort(bucket)
     return [num for bucket in buckets for num in bucket]
 
-def count_sort(nums: List[int]):
-    num_max, size = max(nums), len(nums)
+def count_sort(nums):
+    num_max, n = max(nums), len(nums)
     counts = [0] * (num_max+1)
     for num in nums:
         counts[num] += 1
     for i in range(1, num_max+1):
         counts[i] += counts[i-1]
-    ret = [0] * size
-    for i in range(size-1, -1, -1):
+    ret = [0] * n
+    for i in range(n-1, -1, -1):
         counts[nums[i]] -= 1
         ret[counts[nums[i]]] = nums[i]
     return ret
 
-def radix_sort(nums: List[int]):
+def radix_sort(nums):
     num_max, k = max(nums), 1
     while num_max >= 10**k:
         k += 1
