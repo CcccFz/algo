@@ -1,7 +1,6 @@
-from typing import List
 import random
 
-def merge_sort(nums: List[int]):
+def merge_sort(nums):
     def merge_sort_idx(l, r):
         if l < r:
             mid = l + ((r-l)>>1)
@@ -13,7 +12,7 @@ def merge_sort(nums: List[int]):
         i, j = l, mid+1
         tmp = []
         while i <= mid and j <= r:
-            if nums[i] < nums[j]:
+            if nums[i] <= nums[j]:
                 tmp.append(nums[i])
                 i += 1
             else:
@@ -24,9 +23,8 @@ def merge_sort(nums: List[int]):
         nums[l:r+1] = tmp
 
     return merge_sort_idx(0, len(nums)-1)
-    
 
-def quick_sort(nums: List[int]):
+def quick_sort(nums):
     cnt = 0
 
     def quick_sort_idx(l, r):
@@ -40,21 +38,21 @@ def quick_sort(nums: List[int]):
         nums[mid], nums[r] = nums[r], nums[mid]
 
         nonlocal cnt
-        if cnt % 2 == 0:
+        if cnt % 2:
             i = l
             for j in range(l, r):
-                if nums[j] < nums[r]:
+                if nums[j] <= nums[r]:
                     nums[i], nums[j] = nums[j], nums[i]
                     i += 1
-            nums[i], nums[r] = nums[r], nums[i]
+            nums[r], nums[i] = nums[i], nums[r]
         else:
             pivot = nums[r]
             i, j = l, r
             while i < j:
-                while i < j and nums[i] < pivot:
+                while i < j and nums[i] <= pivot:
                     i += 1
                 nums[j] = nums[i]
-                while i < j and nums[j] >= pivot:
+                while i < j and nums[j] > pivot:
                     j -= 1
                 nums[i] = nums[j]
             nums[i] = pivot
@@ -62,7 +60,7 @@ def quick_sort(nums: List[int]):
         cnt += 1
         return i
 
-    quick_sort_idx(0, len(nums)-1)
+    return quick_sort_idx(0, len(nums)-1)
 
 if __name__ == '__main__':
     nums = [3,2,1,5,4,6,7]
