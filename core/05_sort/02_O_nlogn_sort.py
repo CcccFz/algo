@@ -62,6 +62,26 @@ def quick_sort(nums):
 
     return quick_sort_idx(0, len(nums)-1)
 
+def top_k(nums, k):
+    def partition(l, r):
+        mid = random.randint(l, r)
+        nums[mid], nums[r] = nums[r], nums[mid]
+        i = l
+        for j in range(l, r):
+            if nums[j] > nums[r]:
+                nums[i], nums[j] = nums[j], nums[i]
+                i += 1
+        nums[i], nums[r] = nums[r], nums[i]
+        
+        if i+1 < k:
+            return partition(i+1, r)
+        elif i+1 > k:
+            return partition(l, mid-1)
+        else:
+            return nums[i]
+
+    return partition(0, len(nums)-1)
+
 if __name__ == '__main__':
     nums = [3,2,1,5,4,6,7]
     merge_sort(nums)
@@ -70,3 +90,6 @@ if __name__ == '__main__':
     nums = [3,2,1,5,4,6,7]
     quick_sort(nums)
     print(nums)
+
+    nums = [3,2,1,5,4,6,7]
+    print(top_k(nums, 3))

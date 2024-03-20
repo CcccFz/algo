@@ -3,7 +3,7 @@ class Graph:
         self.vertex = []
 
     def add_edge(self, _from, to):
-        while len(self) <= _from or len(self) <= to:
+        while len(self) <= max(_from, to):
             self.vertex.append([])
         self.vertex[_from].append(to)
         self.vertex[to].append(_from)
@@ -80,7 +80,7 @@ class Graph:
     def __len__(self):
         return len(self.vertex)
 
-    def __repr__(self) -> str:
+    def __repr__(self):
         for i, vertex in enumerate(self.vertex):
             print(i, vertex)
         return ''

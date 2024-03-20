@@ -1,4 +1,8 @@
-from linked_node import Node
+class Node:
+    def __init__(self, val=None):
+        self.val = val
+        self.next = None
+        self.prev = None
 
 class Linkedlist:
     def __init__(self):

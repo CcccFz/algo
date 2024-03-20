@@ -1,7 +1,7 @@
 class Node:
     def __init__(self, val):
         self.val = val
-        self.left, self.right = None, None
+        self.left = self.right = None
 
 class BinarySearchTree():
     def __init__(self, vals):
@@ -80,46 +80,40 @@ class BinarySearchTree():
         return cur.val
 
     def depth(self):
-        def _depth(cur):
-            if not cur:
+        def dfs(root):
+            if not root:
                 return 0
-            elif not cur.left and not cur.right:
+            elif not root.left and not root.right:
                 return 0
             else:
-                return max(_depth(cur.left), _depth(cur.right)) + 1
-
-        return _depth(self.root)
+                return max(dfs(root.left), dfs(root.right)) + 1
+        return dfs(self.root)
 
     def in_order(self):
-        def _in_order(cur):
-            if not cur:
+        def dfs(root):
+            if not root:
                 return
-            _in_order(cur.left)
-            ret.append(cur.val)
-            _in_order(cur.right)
-        
+            dfs(root.left)
+            ret.append(root.val)
+            dfs(root.right)
         ret = []
-        _in_order(self.root)
+        dfs(self.root)
         print(ret)
     
     def bfs(self):
-        if not self.root:
-            return
         ret = []
-        level = self.depth() + 1
-        for i in range(level):
-            ret.append([None]*2**i)
-        queue = [(1, self.root)]
-        level = 1
+        queue = []
+        if self.root:
+            queue.append(self.root)
         while queue:
-            i, node = queue.pop(0)
-            if i >= 2**level:
-                print(str(ret[level-1])[1:-1])
-                level += 1
-            if node:
-                ret[level-1][i%2**(level-1)] = node.val
-                queue.append((i*2, node.left))
-                queue.append((i*2+1, node.right))
+            for _ in range(len(queue)):
+                node = queue.pop(0)
+                ret.append(node.val)
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+        print(ret)
 
     def __repr__(self):
         self.in_order()
