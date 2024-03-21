@@ -7,7 +7,7 @@ class Graph:
             self.vertex.append([])
         self.vertex[_from].append(to)
         self.vertex[to].append(_from)
-    
+
     def bfs(self, _from, to):
         if _from == to:
             return [to]
@@ -49,21 +49,25 @@ class Graph:
     def dfs(self, _from, to):
         def _dfs(i):
             nonlocal found
-            if found or visited[i]:
+            if found:
                 return
+
             visited[i] = True
+            if i == to:
+                ret.append(to)
+                while prev[i] is not None:
+                    ret.insert(0, prev[i])
+                    i = prev[i]
+                found = True
+                return
+
             for j in self.vertex[i]:
+                if visited[j]:
+                    continue
                 prev[j] = i
-                if j == to:
-                    ret.append(to)
-                    while prev[j] is not None:
-                        ret.insert(0, prev[j])
-                        j = prev[j]
-                    found = True
-                    return
                 _dfs(j)
 
-        visited, prev, found, ret = [False]*len(self), [None]*len(self), False, []
+        visited, prev, found, ret = [False] * len(self), [None]*len(self), False, []
         _dfs(_from)
         return ret
 
@@ -74,7 +78,8 @@ class Graph:
         for i, vertex in enumerate(self.vertex):
             print(i, vertex)
         return ''
-    
+
+
 if __name__ == '__main__':
     graph = Graph()
     graph.add_edge(0, 1)
@@ -89,7 +94,7 @@ if __name__ == '__main__':
     graph.add_edge(6, 7)
     print(graph)
     print(graph.bfs(0, 7))    # [0, 1, 2, 5, 7]
-    print(graph.find_vertex_at_degree(0, 3)) # 4度多个7
+    print(graph.find_vertex_at_degree(0, 3))  # 4度多个7
     print(graph.dfs(0, 7))  # [0, 1, 2, 5, 4, 6, 7]
 
 
