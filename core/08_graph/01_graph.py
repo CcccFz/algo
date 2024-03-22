@@ -20,7 +20,7 @@ class Graph:
                     continue
                 visited[j], prev[j] = True, i
                 if j == to:
-                    ret = [j]
+                    ret = [to]
                     while prev[j] is not None:
                         ret.insert(0, prev[j])
                         j = prev[j]
@@ -51,7 +51,6 @@ class Graph:
             nonlocal found
             if found:
                 return
-
             visited[i] = True
             if i == to:
                 ret.append(to)
@@ -60,14 +59,13 @@ class Graph:
                     i = prev[i]
                 found = True
                 return
-
             for j in self.vertex[i]:
                 if visited[j]:
                     continue
                 prev[j] = i
                 _dfs(j)
 
-        visited, prev, found, ret = [False] * len(self), [None]*len(self), False, []
+        ret, found, visited, prev = [], False, [False]*len(self), [None]*len(self)
         _dfs(_from)
         return ret
 
