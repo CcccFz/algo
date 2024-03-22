@@ -13,10 +13,7 @@ class Graph:
         for tos in self.vertex:
             for to in tos:
                 in_degree[to] += 1
-        queue = []
-        for to, degree in enumerate(in_degree):
-            if degree == 0:
-                queue.append(to)
+        queue = [_from for _from in range(self.n) if in_degree[_from] == 0]
         while queue:
             _from = queue.pop(0)
             print(_from, end=' ')
@@ -27,25 +24,22 @@ class Graph:
         print()
 
     def topo_sort_dfs(self):
-        inverse_vertex = [[] for _ in range(self.n)]
+        reverse_vertex, visited = [[] for _ in range(self.n)], [False]*self.n
         for _from, tos in enumerate(self.vertex):
             for to in tos:
-                inverse_vertex[to].append(_from)
-
+                reverse_vertex[to].append(_from)
         def dfs(_from):
-            for to in inverse_vertex[_from]:
+            visited[_from] = True
+            for to in reverse_vertex[_from]:
                 if visited[to]:
                     continue
-                visited[to] = True
                 dfs(to)
             print(_from, end=' ')
-
-        visited = [False] * self.n
         for _from in range(self.n):
             if visited[_from]:
                 continue
-            visited[_from] = True
             dfs(_from)
+        print()
 
 
 graph = Graph(8)
